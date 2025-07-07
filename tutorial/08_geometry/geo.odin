@@ -5,11 +5,11 @@ import "core:strings"
 import sdl "vendor:sdl3"
 import sdl_image "vendor:sdl3/image"
 
-WIDTH :: 640
+WIDTH  :: 640
 HEIGHT :: 480
-renderer : ^sdl.Renderer
-texture : ^sdl.Texture
-window : ^sdl.Window
+window: ^sdl.Window
+renderer: ^sdl.Renderer
+background: ^sdl.Texture
 
 main :: proc() {
     if !init() {
@@ -71,18 +71,13 @@ init :: proc() -> bool {
     if !sdl.SetHint(sdl.HINT_RENDER_VSYNC, "1") {
         fmt.eprintln("Warning: VSync hint not set!")
     }
-    window = sdl.CreateWindow(
+    if !sdl.CreateWindowAndRenderer(
         "Geometry Rendering",
         WIDTH, HEIGHT,
-        {sdl.WindowFlags.RESIZABLE}
-    )
-    if window == nil {
+        {sdl.WindowFlags.RESIZABLE},
+        &window, &renderer
+    ) {
         fmt.eprintfln("Could not create window. SDL_Error: %s", sdl.GetError())
-        return false
-    }
-    renderer = sdl.CreateRenderer(window, nil)
-    if renderer == nil {
-        fmt.eprintfln("Could not create renderer. SDL_Error: %s", sdl.GetError())
         return false
     }
     return true

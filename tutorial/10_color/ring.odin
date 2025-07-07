@@ -8,7 +8,7 @@ import "../../sutil/tex"
 
 WIDTH :: 640
 HEIGHT :: 480
-background_texture, foo_texture : tex.Texture
+background_texture, foo_texture : ^tex.Texture
 renderer : ^sdl.Renderer
 window : ^sdl.Window
 
@@ -39,8 +39,8 @@ main :: proc() {
 }
 
 exit :: proc() {
-    tex.destroy(&background_texture)
-    tex.destroy(&foo_texture)
+    tex.destroy(background_texture)
+    tex.destroy(foo_texture)
     sdl.DestroyRenderer(renderer)
     sdl.DestroyWindow(window)
     sdl.Quit()
@@ -67,11 +67,11 @@ init :: proc() -> bool {
 }
 
 load_media :: proc() -> bool {
-    if !tex.from_img(renderer, &background_texture, "background.png") {
+    if !tex.from_img(renderer, background_texture, "background.png") {
         fmt.eprintln("Failed to load background texture image.")
         return false
     }
-    if !tex.from_img(renderer, &foo_texture, "foo.png") {
+    if !tex.from_img(renderer, foo_texture, "foo.png") {
         fmt.eprintln("Failed to load foo texture image.")
         return false
     }

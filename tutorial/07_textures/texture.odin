@@ -4,13 +4,13 @@ import "core:fmt"
 import "core:strings"
 import sdl "vendor:sdl3"
 import sdl_image "vendor:sdl3/image"
-import "../../sutil/texture"
+import "../../sutil/tex"
 
-WIDTH :: 640
+WIDTH  :: 640
 HEIGHT :: 480
-renderer : ^sdl.Renderer
-texture : ^sdl.Texture
 window : ^sdl.Window
+renderer : ^sdl.Renderer
+background : ^tex.Texture
 
 init :: proc() -> bool {
     if !sdl.Init(sdl.INIT_VIDEO) {
@@ -28,8 +28,9 @@ init :: proc() -> bool {
     }
     sdl.SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF)
 
-    texture = texture.load(renderer, "texture.png")
-    if texture == nil {
+    background = new(tex.Texture)
+    tex.from_img(renderer, background, "texture.png")
+    if background == nil {
         fmt.eprintln("Failed to load_media!")
         return false
     }
@@ -51,14 +52,14 @@ main :: proc() {
         }
         sdl.SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF );
         sdl.RenderClear(renderer)
-        texture.render(renderer, texture)
+        tex.render(renderer, background.texture)
         sdl.RenderPresent(renderer)
     }    
     exit()
 }
 
 exit :: proc() {
-    texture.destroy(texture)
+    tex.destroy(background)
     sdl.DestroyRenderer(renderer)
     sdl.DestroyWindow(window)
     sdl.Quit()

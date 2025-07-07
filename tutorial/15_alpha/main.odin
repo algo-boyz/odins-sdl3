@@ -21,9 +21,9 @@ COLOR_MAGNITUDE_COUNT :: 3
 COLOR_MAGNITUDES := [COLOR_MAGNITUDE_COUNT]u8{0x00, 0x7F, 0xFF}
 WIDTH :: 640
 HEIGHT :: 480
-window : ^sdl.Window
-renderer : ^sdl.Renderer
-colors_texture :tex.Texture
+window: ^sdl.Window
+renderer: ^sdl.Renderer
+colors_texture: ^tex.Texture
 
 main :: proc() {
     if !init() {
@@ -98,14 +98,14 @@ main :: proc() {
         // Center the texture on screen
         x := (WIDTH - colors_texture.w) / 2
         y := (HEIGHT - colors_texture.h) / 2
-        tex.render_clipped(renderer, colors_texture, x, y, nil)
+        tex.render_scaled(renderer, colors_texture, x, y, nil)
         sdl.RenderPresent(renderer)
     }    
     exit()
 }
 
 exit :: proc() {
-    tex.destroy(&colors_texture)
+    tex.destroy(colors_texture)
     sdl.DestroyRenderer(renderer)
     sdl.DestroyWindow(window)
     sdl.Quit()
@@ -128,7 +128,7 @@ init :: proc() -> bool {
 }
 
 load_media :: proc() -> bool {
-    if !tex.from_img(renderer, &colors_texture, "colors.png") {
+    if !tex.from_img(renderer, colors_texture, "colors.png") {
         fmt.eprintln("Failed to load colors image.")
         return false
     }

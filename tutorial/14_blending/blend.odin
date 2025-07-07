@@ -8,9 +8,9 @@ import "../../sutil/tex"
 
 WIDTH :: 640
 HEIGHT :: 480
-window : ^sdl.Window
-renderer : ^sdl.Renderer
-texture_fade_in, texture_fade_out : tex.Texture
+window: ^sdl.Window
+renderer: ^sdl.Renderer
+texture_fade_in, texture_fade_out: ^tex.Texture
 
 main :: proc() {
     if !init() {
@@ -46,8 +46,8 @@ main :: proc() {
 }
 
 exit :: proc() {
-    tex.destroy(&texture_fade_in)
-    tex.destroy(&texture_fade_out)
+    tex.destroy(texture_fade_in)
+    tex.destroy(texture_fade_out)
     sdl.DestroyRenderer(renderer)
     sdl.DestroyWindow(window)
     sdl.Quit()
@@ -76,13 +76,13 @@ init :: proc() -> (ok: bool) {
 }
 
 load_media :: proc() -> (ok: bool) {
-    if !tex.from_img(renderer, &texture_fade_in, "fadein.png") {
+    if !tex.from_img(renderer, texture_fade_in, "fadein.png") {
         fmt.eprintln("Failed to load fade in colors image.")
         return
     }
     tex.set_blend_mode(texture_fade_in, {sdl.BlendModeFlag.BLEND})
 
-    if !tex.from_img(renderer, &texture_fade_out, "fadeout.png") {
+    if !tex.from_img(renderer, texture_fade_out, "fadeout.png") {
         fmt.eprintln("Failed to load fade out colors image.")
         return
     }

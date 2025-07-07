@@ -90,7 +90,7 @@ render_rect :: proc(renderer: ^sdl.Renderer, texture: ^Texture, x : f32, y : f32
     sdl.RenderTexture(renderer, texture.texture, nil, &dst_rect)
 }
 
-render_clipped :: proc(renderer: ^sdl.Renderer, texture: ^Texture, x : i32, y : i32, clip : ^sdl.Rect) {
+render_scaled :: proc(renderer: ^sdl.Renderer, texture: ^Texture, x : i32, y : i32, clip : ^sdl.Rect) {
     dst_rect := sdl.FRect {
         x = f32(x),
         y = f32(y),
@@ -119,14 +119,14 @@ render_rotated :: proc(renderer: ^sdl.Renderer, texture: ^Texture, x : f32, y : 
     sdl.RenderTextureRotated(renderer, texture.texture, nil, &dst_rect, angle, center, flip_mode)
 }
 
-set_alpha :: proc(texture : Texture, alpha : u8) {
+set_alpha :: proc(texture : ^Texture, alpha : u8) {
     sdl.SetTextureAlphaMod(texture.texture, alpha)
 }
 
-set_blend_mode :: proc(texture : Texture, blend_mode : sdl.BlendMode) {
+set_blend_mode :: proc(texture : ^Texture, blend_mode : sdl.BlendMode) {
     sdl.SetTextureBlendMode(texture.texture, blend_mode)
 }
 
-set_colour :: proc(texture : Texture, r : u8, g : u8, b : u8) {
+set_colour :: proc(texture : ^Texture, r : u8, g : u8, b : u8) {
     sdl.SetTextureColorMod(texture.texture, r, g, b)
 }

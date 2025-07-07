@@ -10,6 +10,7 @@ WIDTH :: 640
 HEIGHT :: 480
 BTN_WIDTH :: 300
 BTN_HEIGHT :: 200
+
 Mouse_State :: enum {
     MOUSE_OUT = 0,
     MOUSE_OVER_MOTION = 1,

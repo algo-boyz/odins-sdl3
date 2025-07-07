@@ -7,7 +7,7 @@ import sdl "vendor:sdl3"
 import img "vendor:sdl3/image"
 import font "../../sutil/font"
 
-WIDTH :: 640
+WIDTH :: 800
 HEIGHT :: 480
 SDL_FLAGS :: sdl.INIT_VIDEO
 WINDOW_FLAG :: sdl.WindowFlags.RESIZABLE
@@ -67,7 +67,7 @@ run :: proc(g: ^Game) {
 		sdl.SetRenderDrawColor(g.renderer, 0xFF, 0xFF, 0xFF, 0xFF)
 		sdl.RenderClear(g.renderer)
 		// Render centered text
-		font.render(g.font, g.renderer, TEXT, COLOR)
+		font.render(g.font, g.renderer, WIDTH/10, HEIGHT/2, TEXT, COLOR)
 		sdl.RenderPresent(g.renderer)
 		sdl.Delay(16)
 	}

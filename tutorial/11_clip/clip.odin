@@ -10,7 +10,7 @@ WIDTH :: 640
 HEIGHT :: 480
 renderer: ^sdl.Renderer
 sprite_clips: [4]sdl.Rect
-sprite_texture: tex.Texture
+sprite_texture: ^tex.Texture
 window: ^sdl.Window
 
 main :: proc() {
@@ -32,17 +32,17 @@ main :: proc() {
         }
         sdl.SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF)
         sdl.RenderClear(renderer)
-        tex.render_clipped(renderer, sprite_texture, 0, 0, &sprite_clips[0]) // Top left
-        tex.render_clipped(renderer, sprite_texture, WIDTH - sprite_clips[1].w, 0, &sprite_clips[1]) // Top right
-        tex.render_clipped(renderer, sprite_texture, 0, HEIGHT - sprite_clips[2].h, &sprite_clips[2]) // Bottom left
-        tex.render_clipped(renderer, sprite_texture, WIDTH - sprite_clips[3].w, HEIGHT - sprite_clips[3].h, &sprite_clips[3]) // Bottom right
+        tex.render_scaled(renderer, sprite_texture, 0, 0, &sprite_clips[0]) // Top left
+        tex.render_scaled(renderer, sprite_texture, WIDTH - sprite_clips[1].w, 0, &sprite_clips[1]) // Top right
+        tex.render_scaled(renderer, sprite_texture, 0, HEIGHT - sprite_clips[2].h, &sprite_clips[2]) // Bottom left
+        tex.render_scaled(renderer, sprite_texture, WIDTH - sprite_clips[3].w, HEIGHT - sprite_clips[3].h, &sprite_clips[3]) // Bottom right
         sdl.RenderPresent(renderer)
     }    
     exit()
 }
 
 exit :: proc() {
-    tex.destroy(&sprite_texture)
+    tex.destroy(sprite_texture)
     sdl.DestroyRenderer(renderer)
     sdl.DestroyWindow(window)
     sdl.Quit()
@@ -70,7 +70,7 @@ init :: proc() -> bool {
 }
 
 load_media :: proc() -> bool {
-    if !tex.from_img(renderer, &sprite_texture, "dots.png") {
+    if !tex.from_img(renderer, sprite_texture, "dots.png") {
         fmt.eprintln("Failed to load dots texture image.")
         return false
     }

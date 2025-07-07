@@ -9,7 +9,7 @@ import "../../sutil/tex"
 WIDTH :: 640
 HEIGHT :: 480
 renderer: ^sdl.Renderer
-texture: tex.Texture
+texture: ^tex.Texture
 window: ^sdl.Window
 
 main :: proc() {
@@ -51,7 +51,7 @@ main :: proc() {
 }
 
 exit :: proc() {
-    tex.destroy(&texture)
+    tex.destroy(texture)
     sdl.DestroyRenderer(renderer)
     sdl.DestroyWindow(window)
     sdl.Quit()
@@ -80,7 +80,7 @@ init :: proc() -> bool {
 }
 
 load_media :: proc() -> bool {
-    if !tex.from_img(renderer, &texture, "colors.png") {
+    if !tex.from_img(renderer, texture, "colors.png") {
         fmt.eprintln("Failed to load colors image.")
         return false
     }
