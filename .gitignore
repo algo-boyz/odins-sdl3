@@ -1,0 +1,8 @@
+**/.DS_Store
+**/.vscode/
+**/build/
+**/sdl/
+**/sdl3/
+hot/
+**/ols.json
+todo/
